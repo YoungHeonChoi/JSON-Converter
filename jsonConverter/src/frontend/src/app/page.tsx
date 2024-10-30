@@ -14,15 +14,38 @@ export default function Home() {
       setFile(e.target.files[0]);
     }else{
       window.alert("json파일만 업로드 할 수 있습니다.");
+      return;
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (file) {
-      console.log("File ready to upload:", file);
+      console.log("업로드된 파일", file);
     } else {
-      alert("Please select a file to upload.");
+      alert("json파일을 업로드 해주세요.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("http://localhost:8080/upload", {
+        method: "POST",
+        body: formData,
+        headers: {
+
+        },
+      } as RequestInit);
+
+      if (response.ok) {
+        alert("업로드 성공");
+      } else {
+        alert("업로드 실패");
+      }
+    } catch (error) {
+      console.error("업로드 에러", error);
     }
   };
 
@@ -87,9 +110,9 @@ export default function Home() {
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
+            href="#"
             rel="noopener noreferrer"
+            onClick={handleSubmit}
           >
             <Image
               className="dark:invert"
