@@ -15,7 +15,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/upload").permitAll() // /upload 엔드포인트 인증 없이 접근 허용
+                        .requestMatchers("/convert").permitAll() // /upload 엔드포인트 인증 없이 접근 허용
                         .anyRequest().authenticated() // 나머지 경로는 인증 필요
                 )
                 .formLogin(form -> form.disable()); // 기본 로그인 페이지 비활성화
