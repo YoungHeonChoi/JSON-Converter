@@ -31,7 +31,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:8080/upload", {
+      const response = await fetch("http://localhost:8080/convert", {
         method: "POST",
         body: formData,
         headers: {
