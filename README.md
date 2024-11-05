@@ -111,6 +111,8 @@ spring:
 `layout.tsx`는 Next.js 13 이상에서 새롭게 도입된 기능으로, 페이지와 컴포넌트의 구조를 정의하고 반복되는 UI 요소를 쉽게 관리할 수 있게 해준다.  
 Next.js의 app router 기능을 활용하는 경우, `layout.tsx`는 파일 시스템 기반 라우팅을 통한 페이지별 레이아웃 구성을 돕고, 이 기능을 최적화하여 사용하는 방법은 다음과 같다.
 
+<br />
+
 ## 1. 페이지별 layout.tsx 파일 생성
 
 Next.js는 파일 시스템 기반의 라우팅을 사용하기 때문에, 각 폴더에 `layout.tsx` 파일을 생성해 해당 경로 하위의 페이지에 적용할 레이아웃을 설정할 수 있다. 
@@ -136,6 +138,8 @@ export default function DashboardLayout({
 
 위 코드에서는 `/dashboard` 경로의 모든 페이지에 공통 헤더와 푸터가 자동으로 적용된다.
 
+<br />
+
 ## 2. layout.tsx의 재사용을 통한 UI 일관성 유지
 
 사이트 전반에서 동일하게 사용할 레이아웃은 `app/layout.tsx`에 정의하여 일관성을 유지한다.  
@@ -160,6 +164,8 @@ export default function RootLayout({
 }
 ```
 
+<br />
+
 ## 3. 동적 메타데이터 설정
 
 `layout.tsx`를 통해 페이지별로 동적인 메타데이터를 설정할 수 있다.  
@@ -183,6 +189,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 }
 ```
 
+<br />
+
 ## 4. Suspense와 Error Boundary로 레이아웃 강화
 
 `React.Suspense`와 `ErrorBoundary`를 레이아웃에 추가하여 비동기 데이터 로딩 중 로딩 스피너를 보여주거나 오류 발생 시 예외 처리를 할 수 있다.
@@ -204,6 +212,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }
 ```
+
+<br />
 
 ## 5. Context API와의 조합
 
