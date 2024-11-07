@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import RepositoryOptions from '../component/repositoryOptions';
 export default function form() {
     const [file, setFile] = useState(null);
+    const [showRepositoryOptions, setShowRepositoryOptions] = useState(false);
 
     const handleFileChange = (e) => {
         let chkType = e.target.files[0].type;
@@ -38,10 +40,10 @@ export default function form() {
                 const markdownContent = await response.text();
                 console.log(markdownContent);
                 downloadMarkdownFile(markdownContent); // 자동으로 다운로드
-                alert("업로드 성공");
+                console.log("업로드 성공");
                 setFile(null);
             } else {
-                alert("업로드 실패");
+                console.log("업로드 실패");
             }
         } catch (error) {
             console.error("업로드 에러", error);
@@ -60,45 +62,58 @@ export default function form() {
         URL.revokeObjectURL(url); // 메모리 해제
     };
 
-    return (
-        <form
-            className="flex flex-col items-center gap-4 p-4 w-full border-2 border-dashed border-gray-300 rounded-lg"
-        >
-            {/* 파일 업로드 영역 */}
-            <label className="cursor-pointer w-full">
-                <input
-                    type="file"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    accept=".json"
-                />
-                <div className="flex flex-col items-center justify-center h-16 w-full p-4 bg-gray-100 border border-gray-300 rounded-lg text-center text-gray-500 hover:bg-[#383838] dark:hover:bg-[#ccc]">
-                    {file ? (
-                        <span className="font-semibold text-gray-500">{file.name}</span>
-                    ) : (
-                        <>
-                            <span className="font-semibold text-gray-500">Click to upload a JSON file</span>
-                            <span className="text-xs mt-1 text-gray-400">or drag and drop</span>
-                        </>
-                    )}
-                </div>
-            </label>
+    const handleGitPushClick = () => {
+        setShowRepositoryOptions(true);
+    };
 
-            {/* 가로 정렬된 버튼 (점선 테두리 안) */}
-            <div className="flex flex-col sm:flex-row justify-between w-full space-y-4 sm:space-y-0 sm:space-x-4">
-                <button
-                    className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white text-black border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-                    onClick={handleSubmit}
-                >
-                    Export README.md
-                </button>
-                <button
-                    type="reset"
-                    className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white text-black border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-                >
-                    Git Repository Push
-                </button>
-            </div>
-        </form>
+    const handleClose = () => {
+        setShowRepositoryOptions(false);
+    };
+
+    return (
+        <div>
+            <form
+                className="flex flex-col items-center gap-4 p-4 w-full border-2 border-dashed border-gray-300 rounded-lg"
+            >
+                {/* 파일 업로드 영역 */}
+                <label className="cursor-pointer w-full">
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
+                        className="hidden"
+                        accept=".json"
+                    />
+                    <div className="flex flex-col items-center justify-center h-16 w-full p-4 bg-gray-100 border border-gray-300 rounded-lg text-center text-gray-500 hover:bg-[#383838] dark:hover:bg-[#ccc]">
+                        {file ? (
+                            <span className="font-semibold text-gray-500">{file.name}</span>
+                        ) : (
+                            <>
+                                <span className="font-semibold text-gray-500">Click to upload a JSON file</span>
+                                <span className="text-xs mt-1 text-gray-400">or drag and drop</span>
+                            </>
+                        )}
+                    </div>
+                </label>
+
+                <div className="flex flex-col sm:flex-row justify-between w-full space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button
+                        className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white text-black border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                        onClick={handleSubmit}
+                    >
+                        Export README.md
+                    </button>
+                    <button
+                        type="reset"
+                        className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white text-black border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                        onClick={handleGitPushClick}
+                    >
+                        Git Repository Push
+                    </button>
+                </div>
+
+                {/* Git Repository Push를 클릭했을 때 표시되는 옵션들 */}
+                {showRepositoryOptions && <RepositoryOptions onClose={handleClose} />}
+            </form>
+        </div>
     );
 }
