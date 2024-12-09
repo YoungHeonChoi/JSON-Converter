@@ -1,5 +1,8 @@
+"use client";
+
 import { Github } from "lucide-react";
 import React from "react";
+import Link from "next/link";
 export default function Home() {
     return (
         <main className="min-h-screen w-full flex items-center justify-center bg-gray-900 px-4">
@@ -15,13 +18,7 @@ export default function Home() {
                         className="w-full bg-gray-700 text-white rounded-md py-3 px-4 flex items-center justify-center gap-3 hover:bg-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                     >
                         <Github className="w-5 h-5" />
-                        <span className="font-medium">Continue with GitHub</span>
-                    </button>
-
-                    <button
-                        className="w-full mt-4 bg-gray-600 text-white rounded-md py-3 px-4 flex items-center justify-center gap-3 hover:bg-gray-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                    >
-                        <span className="font-medium">로그인 없이 사용</span>
+                        <Link href="converter/step1" className="font-medium">GitHub Login</Link>
                     </button>
                 </div>
             </div>

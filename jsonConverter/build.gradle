@@ -32,6 +32,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.15.0'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.0'
+    // Spring Boot JDBC 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    // MariaDB Java 클라이언트 의존성
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+    // MyBatis 의존성
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 }
 
 tasks.named('test') {
