@@ -1,8 +1,11 @@
-"use client";
-
 import { Github } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title : "Home",
+};
 export default function Home() {
     return (
         <main className="min-h-screen w-full flex items-center justify-center bg-gray-900 px-4">
