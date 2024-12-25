@@ -9,31 +9,32 @@ import axios from "axios";
 //     title : "Home",
 // };
 
-
 export default function Home({ code }) {
     const params = useSearchParams();
     const githubCode = params.get("code");
     const router = useRouter();
 
-    if(githubCode != null){
-        axios
-            .post("controller url", {
-                code : githubCode
-            })
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log("response Info:", response); // 사용자 정보 출력
+    useEffect(() => {
+        if(githubCode){
+            axios
+                .post("http://localhost:8080/apiCall/getToken", {
+                    code : githubCode
+                })
+                .then((response) => {
+                    console.log("response Data:", response.data);
+                    let result = response.data;
 
-                    // 사용자 정보가 정상적으로 조회되었으면 step1으로 이동
-                    router.push("/converter/step1");
-                }
-            })
-            .catch((error) => {
-                // 토큰이 유효하지 않거나 다른 오류 처리
-                console.error("Error fetching user data:", error);
-                alert("Failed to fetch user data. Please try again.");
-            });
-    }
+                    if(result == "complete"){
+                        router.push("/converter/step1");
+                    }
+                })
+                .catch((error) => {
+                    // 토큰이 유효하지 않거나 다른 오류 처리
+                    console.error("Error fetching user data:", error);
+                    alert("Failed to fetch user data. Please try again.");
+                });
+        }
+    }, [githubCode])
 
     const redirectToGitHub = () => {
         window.location.href = 'https://github.com/login/oauth/authorize?client_id=Ov23liYD7eo0bvhsMMk6&redirect_uri=http://localhost:3000/';
