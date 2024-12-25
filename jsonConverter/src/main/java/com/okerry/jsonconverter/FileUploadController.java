@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/convert")
 public class FileUploadController {
-    @PostMapping
+    @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
 
         if (file.isEmpty()) {
