@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, {useState, useRef, useEffect} from "react";
 import { usePageNavigation } from "@/hooks/usePageNavigation";
+import axios from "axios";
+import Cookie from 'js-cookie';
 
-export default function Step1() {
+export default function Step1({ setUserLogin }) {
     const [isDragging, setIsDragging] = useState(false);
     const [files, setFiles] = useState([]);
     const fileInputRef = useRef(null);
+    const [login, setLogin] = useState("");  // 로그인 정보를 저장할 상태 추가
     const { navigateTo } = usePageNavigation();
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -29,6 +32,25 @@ export default function Step1() {
     const handleClick = () => {
         fileInputRef.current.click();
     };
+
+    useEffect(() => {
+        const accessToken = Cookie.get('accessToken');
+        axios
+            .post("http://localhost:8080/apiCall/getUserInfo", {
+                withCredentials : true,
+                accessToken : accessToken,
+            })
+            .then((response) => {
+                console.log("response Data:", response.data);
+                setLogin(response.data.login);  // 로그인 값을 상태에 저장
+                setUserLogin(response.data.login);  // 부모 컴포넌트로 login 값 전달
+            })
+            .catch((error) => {
+                console.error("Error fetching user data:", error);
+                alert("Failed to fetch user data. Please try again.");
+            });
+    }, [])
+
     return (
             <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
                 <input

@@ -14,10 +14,10 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // Next.js 서버 주소
-                        .allowedMethods("POST", "GET", "PUT", "DELETE")
-                        .allowedHeaders("*")
-                        .allowCredentials(true); // 인증 정보 허용
+                        .allowedOrigins("http://localhost:3000")  // Next.js의 주소
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowCredentials(true)  // 쿠키 전달을 허용
+                        .allowedHeaders("*");
             }
         };
     }

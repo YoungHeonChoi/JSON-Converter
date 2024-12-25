@@ -4,6 +4,7 @@ import { Github } from "lucide-react";
 import React, {useEffect} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import axios from "axios";
+import Cookie from 'js-cookie';
 
 // export const metadata: Metadata = {
 //     title : "Home",
@@ -18,14 +19,16 @@ export default function Home({ code }) {
         if(githubCode){
             axios
                 .post("http://localhost:8080/apiCall/getToken", {
-                    code : githubCode
+                    code : githubCode,
+                    withCredentials : true,
                 })
                 .then((response) => {
                     console.log("response Data:", response.data);
                     let result = response.data;
 
-                    if(result == "complete"){
-                        router.push("/converter/step1");
+                    if(result != "failed"){
+                        Cookie.set('accessToken', result, { expires: 10 / 1440, path: '' });
+                        router.push("/converter/step/step1");
                     }
                 })
                 .catch((error) => {
